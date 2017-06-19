@@ -10,6 +10,9 @@ import Example6 from './Example6'
 
 import Homework1 from './Homework1'
 
+import Example7 from './Example7'
+import Example8 from './Example8'
+
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Example1 />, document.getElementById('root'))
+  ReactDOM.render(<Example8 />, document.getElementById('root'))
 })

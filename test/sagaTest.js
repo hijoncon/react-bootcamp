@@ -1,22 +1,25 @@
+require('mocha-generators').install();
+
 import { expect } from 'chai'
 import { incrementSaga } from '../app/Example9/state'
 import { delay } from 'redux-saga'
 import { put } from 'redux-saga/effects'
 import { increment, reducer } from '../app/Example9/state'
+import R from 'ramda'
 
+const stepper = (fn) => (mock) => fn.next(mock).value
 
 describe('increment async', function() {
     it('should run the saga', function() {
-        const delayResult = incrementSaga() //returns iterator: {done: <bool>, value: <any>, next: <func>}
-        expect(delayResult.value).to.be.equal(delay(500))
+        const step = stepper(incrementSaga()) //returns iterator: {done: <bool>, value: <any>, next: <func>}
+        const delayResult = step()
+        expect(delayResult).to.have.property('@@redux-saga/CANCEL_PROMISE')
 
-        const selectResult = delayResult.next()
-        const state = selectResult.value.SELECT.fn(20);
+        const selectResult = step()
+        const state = 20
 
-        const putResult = selectResult.next(state)
-        expect(putResult.value).to.be.equal(put(increment(3)))
-
-        expect(putResult.next().done).to.be.true();
+        const putResult = step(state)
+        expect(putResult).to.deep.equal(put(increment(7)))
     })
 })
 

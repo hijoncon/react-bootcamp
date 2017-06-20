@@ -8,7 +8,7 @@ const { put, call, takeLatest, select, all } = effects;
 //keep
 const initialState = 0;
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
   if(_.isNil(state)) {
     return initialState;
   }

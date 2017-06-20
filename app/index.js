@@ -12,7 +12,8 @@ import Homework1 from './Homework1'
 
 import Example7 from './Example7'
 import Example8 from './Example8'
+import Example9 from './Example9'
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Example8 />, document.getElementById('root'))
+  ReactDOM.render(<Example9 />, document.getElementById('root'))
 })

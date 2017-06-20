@@ -1,7 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware, { delay } from 'redux-saga'
-import { put, call, takeLatest, select } from 'redux-saga-effects'
+import { effects } from 'redux-saga'
 import _ from 'lodash';
+
+const { put, call, takeLatest, select, all } = effects;
 
 //keep
 const initialState = 0;
@@ -38,13 +40,6 @@ export const incrementAsync = (value=1) =>  ({
 export function * incrementSaga() {
   yield delay(500)
   const currentValue = yield select(state => state)
-  /*
-  {
-    SELECT: {
-      fn: <fn>
-    }
-  }
-  */
   if(currentValue > 50) {
     yield put(increment(3))
   } else { 
@@ -53,9 +48,9 @@ export function * incrementSaga() {
 }
 
 function * rootSaga() {
-  yield [
+  yield all([
     takeLatest('INC_ASYNC', incrementSaga)
-  ]
+  ])
 }
 
 const sagaMiddleware = createSagaMiddleware();
